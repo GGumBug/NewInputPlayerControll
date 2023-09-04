@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class Test : BaseScene
 {
-    private void Start()
-    {
-        AddressableManager.Instance.Instantiate("Test");
-    }
+
 }

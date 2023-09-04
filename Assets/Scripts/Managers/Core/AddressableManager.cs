@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using static TreeEditor.TreeEditorHelper;
 
 public class AddressableManager : Singleton<AddressableManager>
 {
@@ -98,14 +98,22 @@ public class AddressableManager : Singleton<AddressableManager>
         UpdateMode = AddressableType.Clear;
     }
 
-    public T Load<T>(string key)
-    {
-        return Addressables.LoadAssetAsync<T>(key).Result;
+    public void Load<T>(string key, Action<T> action = null)
+    { 
+        Addressables.LoadAssetAsync<T>(key).Completed += (op) =>
+        {
+            if (op.Status != AsyncOperationStatus.Succeeded)
+                throw new System.Exception("Addressable Load Error");
+
+            action?.Invoke(op.Result);
+        };
     }
 
     public GameObject Instantiate(string key, Transform parent = null)
     {
-        return Addressables.InstantiateAsync(key, parent).Result;
+        GameObject go = Addressables.InstantiateAsync(key, parent).Result;
+
+        return go;
     }
 
     public GameObject Instantiate(string key, Vector3 position, Transform parent = null)
