@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -98,28 +99,43 @@ public class AddressableManager : Singleton<AddressableManager>
         UpdateMode = AddressableType.Clear;
     }
 
-    public void Load<T>(string key, Action<T> action = null)
-    { 
-        Addressables.LoadAssetAsync<T>(key).Completed += (op) =>
+    public async UniTask<T> Load<T>(string key)
+    {
+        AsyncOperationHandle loadHandle;
+        loadHandle = Addressables.LoadAssetAsync<T>(key);
+        await UniTask.WaitUntil(() => loadHandle.IsDone);
+
+        if (loadHandle.Status == AsyncOperationStatus.Succeeded)
+            return (T)loadHandle.Result;
+        else
+            throw new System.Exception($"{key} 로드에 실패했습니다.");
+    }
+
+    public async UniTask<GameObject> Instantiate(string key, Transform parent = null)
+    {
+        AsyncOperationHandle handle;
+        handle = Addressables.InstantiateAsync(key, parent);
+        await UniTask.WaitUntil(() => handle.IsDone);
+
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+            return (GameObject)handle.Result;
+        else
+            throw new System.Exception($"{key} 인스턴스화에 실패했습니다.");
+    }
+
+    public async UniTask<GameObject> Instantiate(string key, Vector3 position, Transform parent = null)
+    {
+        AsyncOperationHandle handle;
+        handle = Addressables.InstantiateAsync(key, parent);
+        await UniTask.WaitUntil(() => handle.IsDone);
+
+        if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            if (op.Status != AsyncOperationStatus.Succeeded)
-                throw new System.Exception("Addressable Load Error");
-
-            action?.Invoke(op.Result);
-        };
-    }
-
-    public GameObject Instantiate(string key, Transform parent = null)
-    {
-        GameObject go = Addressables.InstantiateAsync(key, parent).Result;
-
-        return go;
-    }
-
-    public GameObject Instantiate(string key, Vector3 position, Transform parent = null)
-    {
-        GameObject go = Addressables.InstantiateAsync(key, parent).Result;
-        go.transform.position = position;
-        return go;
+            GameObject go = (GameObject)handle.Result;
+            go.transform.position = position;
+            return go;
+        }
+        else
+            throw new System.Exception($"{key} 인스턴스화에 실패했습니다.");
     }
 }
