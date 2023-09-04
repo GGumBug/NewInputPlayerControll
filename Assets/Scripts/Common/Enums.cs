@@ -6,3 +6,8 @@ public enum AddressableType
     Loaded,
     Clear
 }
+
+public enum InputType
+{
+    Move
+}

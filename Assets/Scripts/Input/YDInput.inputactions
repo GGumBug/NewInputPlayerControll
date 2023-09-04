@@ -1,0 +1,104 @@
+{
+    "name": "YDInput",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "81be5b70-b37c-40eb-aeb6-54cc66f8d603",
+            "actions": [
+                {
+                    "name": "MoveDestPos",
+                    "type": "Value",
+                    "id": "8cfe151e-79c3-4542-a36b-035e29fbe48b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Move",
+                    "type": "Button",
+                    "id": "b22d206b-a6c1-4cb6-99e8-412a3ebadfc8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2e49e8b9-30bd-4816-93d3-666a57e22638",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveDestPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57a3a501-6f8b-423f-8c91-05470d6b7ca7",
+                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveDestPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "301f7dad-95ab-4bd4-aed6-7566fd7d94a3",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1d623d8-8e67-4deb-aaff-52e4721b3620",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Camera",
+            "id": "5a787c94-7b9c-457e-976f-e5258a2b6e96",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "0bfd0ed3-f3ff-4c94-bb64-706d3360ee9b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ef8a7025-a2a5-4a47-9969-19f9975c0992",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

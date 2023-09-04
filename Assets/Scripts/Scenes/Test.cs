@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Test : BaseScene
 {
-
+    private void Start()
+    {
+        PlayerManager.Instance.CreatePlayer();
+    }
 }
