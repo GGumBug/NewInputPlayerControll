@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class InputManager : Singleton<InputManager>
 {
@@ -33,7 +34,7 @@ public class InputManager : Singleton<InputManager>
     }
     #endregion
 
-    private Vector3 curScreenPos;
+    public Vector3 CurScreenPos { get; private set; }
     private IObserver playerMove;
 
     private void OnEnable()
@@ -44,7 +45,8 @@ public class InputManager : Singleton<InputManager>
         _moveDestPos.Enable();
         _move.Enable();
 
-        _moveDestPos.started += (context) => GetDestPos(context);
+        _moveDestPos.started += (context) => ScreenPosStarted(context);
+        _moveDestPos.performed += (context) => ScreenPosPerformed(context);
         _move.canceled += (context) => PressCanceled(context);
     }
 
@@ -54,15 +56,14 @@ public class InputManager : Singleton<InputManager>
         _move.Disable();
     }
 
-    public Vector3 GetDestWorldPos(Transform moveTarget)
+    void ScreenPosStarted(InputAction.CallbackContext context)
     {
-        float y = Camera.main.WorldToScreenPoint(moveTarget.position).y;
-        return Camera.main.ScreenToWorldPoint(curScreenPos + new Vector3(0, y, 0));
+        CurScreenPos = context.ReadValue<Vector2>();
     }
 
-    void GetDestPos(InputAction.CallbackContext context)
+    void ScreenPosPerformed(InputAction.CallbackContext context)
     {
-        curScreenPos = context.ReadValue<Vector2>();
+        CurScreenPos = context.ReadValue<Vector2>();
     }
 
     void PressCanceled(InputAction.CallbackContext context)

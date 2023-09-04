@@ -11,3 +11,8 @@ public enum InputType
 {
     Move
 }
+
+public enum Layer
+{
+    Ground = 8
+}
