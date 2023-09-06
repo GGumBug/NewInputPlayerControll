@@ -9,7 +9,8 @@ public enum AddressableType
 
 public enum InputType
 {
-    Move
+    Move,
+    Drag
 }
 
 public enum Layer

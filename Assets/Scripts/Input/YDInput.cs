@@ -50,7 +50,7 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2e49e8b9-30bd-4816-93d3-666a57e22638"",
-                    ""path"": ""<Mouse>/position"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -61,7 +61,7 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""57a3a501-6f8b-423f-8c91-05470d6b7ca7"",
-                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""path"": ""<Touchscreen>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

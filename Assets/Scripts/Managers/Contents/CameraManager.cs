@@ -2,17 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Unity.VisualScripting;
 
 public class CameraManager : Singleton<CameraManager>
 {
-    CinemachineFreeLook palyerCam;
+    CinemachineFreeLook playerCam;
 
     public void CreatePlayerCam()
     {
         GameObject go = new GameObject("FreeLookCam");
-        palyerCam = go.AddComponent<CinemachineFreeLook>();
+        playerCam = go.AddComponent<CinemachineFreeLook>();
+        var inputProvider = playerCam.AddComponent<InputProviderWhenDrag>();
+        playerCam.UpdateInputAxisProvider();
+
+        SetPlayerCam();
+    }
+
+    void SetPlayerCam()
+    {
         Transform target = PlayerManager.Instance.PlayerCont.transform;
-        palyerCam.Follow = target;
-        palyerCam.LookAt = target;
+        playerCam.m_BindingMode = CinemachineTransposer.BindingMode.WorldSpace;
+        playerCam.m_Lens.FieldOfView = 50f;
+        //Rig 별로 카메라 거리 셋팅
+        playerCam.m_Orbits[0].m_Radius = 3;
+        playerCam.m_Orbits[1].m_Radius = 5;
+        playerCam.m_Orbits[2].m_Radius = 3;
+        playerCam.Follow = target;
+        playerCam.LookAt = target;
+
+
     }
 }

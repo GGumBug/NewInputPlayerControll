@@ -14,3 +14,11 @@ public class PlayerMove : IObserver
         PlayerManager.Instance.PlayerCont.ShotMoveRay();
     }
 }
+
+public class CameraAxis : IObserver
+{
+    public void Update()
+    {
+        
+    }
+}
