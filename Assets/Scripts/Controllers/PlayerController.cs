@@ -4,14 +4,30 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    bool isMove;
+    float speed = 5f;
     int _groundMask = 1 << (int)Layer.Ground;
+    Vector3 destPos;
 
     private void Start()
+    {
+        AddInput();
+    }
+
+    private void Update()
+    {
+        if (isMove)
+        {
+            Move(destPos);
+        }
+    }
+
+    public void AddInput()
     {
         InputManager.Instance.Add(InputType.Move, new PlayerMove());
     }
 
-    public void Move()
+    public void ShotMoveRay()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(InputManager.Instance.CurScreenPos);
@@ -21,8 +37,19 @@ public class PlayerController : MonoBehaviour
         if (raycastHit)
         {
             Vector3 hitPos = hit.point;
-            Vector3 destPos = hitPos + new Vector3(0, transform.position.y, 0);
-            transform.position = destPos;
+            destPos = hitPos + new Vector3(0, transform.position.y, 0);
+            isMove = true;
         }
+    }
+
+    void Move(Vector3 destPos)
+    {
+        Vector3 dir = destPos - transform.position;
+        float moveDist = Mathf.Clamp(speed * Time.deltaTime, 0, dir.magnitude);
+
+        if (dir.magnitude < 0.1f)
+            isMove = false;
+
+        transform.position += dir.normalized * moveDist;
     }
 }

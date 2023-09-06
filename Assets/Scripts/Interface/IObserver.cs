@@ -11,6 +11,6 @@ public class PlayerMove : IObserver
 {
     public void Update()
     {
-        PlayerManager.Instance.PlayerCont.Move();
+        PlayerManager.Instance.PlayerCont.ShotMoveRay();
     }
 }

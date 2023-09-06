@@ -10,5 +10,6 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         GameObject go = await AddressableManager.Instance.Instantiate("Player");
         PlayerCont = go.GetComponent<PlayerController>();
+        CameraManager.Instance.CreatePlayerCam();
     }
 }
