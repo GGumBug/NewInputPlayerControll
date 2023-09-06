@@ -44,22 +44,13 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Zoom"",
-                    ""type"": ""Value"",
-                    ""id"": ""0e34c450-882f-44d7-be73-9ad9fce6670a"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""2e49e8b9-30bd-4816-93d3-666a57e22638"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -70,7 +61,7 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""57a3a501-6f8b-423f-8c91-05470d6b7ca7"",
-                    ""path"": ""<Touchscreen>/delta"",
+                    ""path"": ""<Touchscreen>/primaryTouch/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -92,33 +83,11 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d1d623d8-8e67-4deb-aaff-52e4721b3620"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""path"": ""<Touchscreen>/Press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""89ff529b-c5f6-4953-8793-e39a0527ce00"",
-                    ""path"": ""<Mouse>/scroll"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Zoom"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f308b34a-b637-489e-ab0d-8e292dbce5b2"",
-                    ""path"": ""<Touchscreen>/touch1/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -129,24 +98,66 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
             ""id"": ""5a787c94-7b9c-457e-976f-e5258a2b6e96"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
+                    ""name"": ""CameraRotation"",
+                    ""type"": ""Value"",
                     ""id"": ""0bfd0ed3-f3ff-4c94-bb64-706d3360ee9b"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""a0360432-f317-4322-b081-5c4b02aaa973"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""ef8a7025-a2a5-4a47-9969-19f9975c0992"",
-                    ""path"": """",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""CameraRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69f8b405-b676-4b2e-b4c5-1c813abb8a4c"",
+                    ""path"": ""<Touchscreen>/primaryTouch/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60cdb592-0a30-406a-8415-3ddf9ad288a4"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7ce0c94-1b27-4694-8325-d238b138a108"",
+                    ""path"": ""<Touchscreen>/touch1/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -159,10 +170,10 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_MoveDestPos = m_Player.FindAction("MoveDestPos", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
-        m_Camera_Newaction = m_Camera.FindAction("New action", throwIfNotFound: true);
+        m_Camera_CameraRotation = m_Camera.FindAction("CameraRotation", throwIfNotFound: true);
+        m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -226,14 +237,12 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_MoveDestPos;
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Zoom;
     public struct PlayerActions
     {
         private @YDInput m_Wrapper;
         public PlayerActions(@YDInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveDestPos => m_Wrapper.m_Player_MoveDestPos;
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -249,9 +258,6 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Zoom.started += instance.OnZoom;
-            @Zoom.performed += instance.OnZoom;
-            @Zoom.canceled += instance.OnZoom;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -262,9 +268,6 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Zoom.started -= instance.OnZoom;
-            @Zoom.performed -= instance.OnZoom;
-            @Zoom.canceled -= instance.OnZoom;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -286,12 +289,14 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
     // Camera
     private readonly InputActionMap m_Camera;
     private List<ICameraActions> m_CameraActionsCallbackInterfaces = new List<ICameraActions>();
-    private readonly InputAction m_Camera_Newaction;
+    private readonly InputAction m_Camera_CameraRotation;
+    private readonly InputAction m_Camera_Zoom;
     public struct CameraActions
     {
         private @YDInput m_Wrapper;
         public CameraActions(@YDInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Camera_Newaction;
+        public InputAction @CameraRotation => m_Wrapper.m_Camera_CameraRotation;
+        public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -301,16 +306,22 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_CameraActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_CameraActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            @CameraRotation.started += instance.OnCameraRotation;
+            @CameraRotation.performed += instance.OnCameraRotation;
+            @CameraRotation.canceled += instance.OnCameraRotation;
+            @Zoom.started += instance.OnZoom;
+            @Zoom.performed += instance.OnZoom;
+            @Zoom.canceled += instance.OnZoom;
         }
 
         private void UnregisterCallbacks(ICameraActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @CameraRotation.started -= instance.OnCameraRotation;
+            @CameraRotation.performed -= instance.OnCameraRotation;
+            @CameraRotation.canceled -= instance.OnCameraRotation;
+            @Zoom.started -= instance.OnZoom;
+            @Zoom.performed -= instance.OnZoom;
+            @Zoom.canceled -= instance.OnZoom;
         }
 
         public void RemoveCallbacks(ICameraActions instance)
@@ -332,10 +343,10 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
     {
         void OnMoveDestPos(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
-        void OnZoom(InputAction.CallbackContext context);
     }
     public interface ICameraActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnCameraRotation(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
     }
 }

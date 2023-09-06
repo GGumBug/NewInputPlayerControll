@@ -22,22 +22,13 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Zoom",
-                    "type": "Value",
-                    "id": "0e34c450-882f-44d7-be73-9ad9fce6670a",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "2e49e8b9-30bd-4816-93d3-666a57e22638",
-                    "path": "<Mouse>/delta",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -48,7 +39,7 @@
                 {
                     "name": "",
                     "id": "57a3a501-6f8b-423f-8c91-05470d6b7ca7",
-                    "path": "<Touchscreen>/delta",
+                    "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -70,33 +61,11 @@
                 {
                     "name": "",
                     "id": "d1d623d8-8e67-4deb-aaff-52e4721b3620",
-                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "89ff529b-c5f6-4953-8793-e39a0527ce00",
-                    "path": "<Mouse>/scroll",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f308b34a-b637-489e-ab0d-8e292dbce5b2",
-                    "path": "<Touchscreen>/touch1/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -107,24 +76,66 @@
             "id": "5a787c94-7b9c-457e-976f-e5258a2b6e96",
             "actions": [
                 {
-                    "name": "New action",
-                    "type": "Button",
+                    "name": "CameraRotation",
+                    "type": "Value",
                     "id": "0bfd0ed3-f3ff-4c94-bb64-706d3360ee9b",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Zoom",
+                    "type": "Value",
+                    "id": "a0360432-f317-4322-b081-5c4b02aaa973",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "ef8a7025-a2a5-4a47-9969-19f9975c0992",
-                    "path": "",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "CameraRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69f8b405-b676-4b2e-b4c5-1c813abb8a4c",
+                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60cdb592-0a30-406a-8415-3ddf9ad288a4",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7ce0c94-1b27-4694-8325-d238b138a108",
+                    "path": "<Touchscreen>/touch1/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

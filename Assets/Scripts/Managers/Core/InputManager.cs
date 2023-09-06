@@ -8,7 +8,7 @@ public class InputManager : Singleton<InputManager>
     #region InputAction
     private YDInput _ydInput;
     private InputAction _moveDestPos;
-    private InputAction _move;
+    private InputAction _press;
     private InputAction _zoom;
 
     public InputActionReference CameraXYAxis { get; set; }
@@ -47,6 +47,7 @@ public class InputManager : Singleton<InputManager>
     #endregion
 
     Vector3 startPos;
+    float minDragDist = 5f;
     Coroutine dragCoroutine;
 
     public Vector3 CurScreenPos { get; private set; }
@@ -58,27 +59,27 @@ public class InputManager : Singleton<InputManager>
     {
         _ydInput = new YDInput();
         _moveDestPos = _ydInput.Player.MoveDestPos;
-        _move = _ydInput.Player.Move;
-        _zoom = _ydInput.Player.Zoom;
-        CameraXYAxis = InputActionReference.Create(_ydInput.Player.MoveDestPos);
-        CameraZoom = InputActionReference.Create(_ydInput.Player.Zoom);
+        _press = _ydInput.Player.Move;
+        _zoom = _ydInput.Camera.Zoom;
+        CameraXYAxis = InputActionReference.Create(_ydInput.Camera.CameraRotation);
+        CameraZoom = InputActionReference.Create(_ydInput.Camera.Zoom);
 
         _moveDestPos.Enable();
-        _move.Enable();
+        _press.Enable();
         _zoom.Enable();
 
         _moveDestPos.started += (context) => ScreenPosStarted(context);
         _moveDestPos.performed += (context) => ScreenPosPerformed(context);
-        _move.started += (context) => PressStarted(context);
-        _move.performed += (context) => PressPerformed(context);
-        _move.canceled += (context) => PressCanceled(context);
+        _press.started += (context) => PressStarted(context);
+        _press.performed += (context) => PressPerformed(context);
+        _press.canceled += (context) => PressCanceled(context);
         _zoom.performed += (context) => ZoomPerformed(context);
     }
 
     private void OnDisable()
     {
         _moveDestPos.Disable();
-        _move.Disable();
+        _press.Disable();
         _zoom.Disable();
     }
 
@@ -124,7 +125,9 @@ public class InputManager : Singleton<InputManager>
     {
         while (true) 
         {
-            if (Vector3.Distance(startPos, CurScreenPos) > 0.1f)
+            Debug.Log($"startPos : {startPos}");
+            Debug.Log($"CurScreenPos : {CurScreenPos}");
+            if (Vector2.Distance(startPos, CurScreenPos) > 0.1f)
             {
                 IsDrage = true;
                 yield break;

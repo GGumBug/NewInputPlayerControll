@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 public class CameraManager : Singleton<CameraManager>
 {
     CinemachineFreeLook playerCam;
+    float zoomSpeed = 0.5f;
 
     public void CreatePlayerCam()
     {
@@ -38,17 +39,18 @@ public class CameraManager : Singleton<CameraManager>
     public void ZoomInAndOut(Vector2 value)
     {
         float yAxis = value.y;
-        if (yAxis > 0)
+
+        if (yAxis < 0 && playerCam.m_Orbits[1].m_Radius < 10)
         {
-            playerCam.m_Orbits[0].m_Radius++;
-            playerCam.m_Orbits[1].m_Radius++;
-            playerCam.m_Orbits[2].m_Radius++;
+            playerCam.m_Orbits[0].m_Radius += zoomSpeed;
+            playerCam.m_Orbits[1].m_Radius += zoomSpeed;
+            playerCam.m_Orbits[2].m_Radius += zoomSpeed;
         }
-        else if (yAxis < 0)
+        else if (yAxis > 0 && playerCam.m_Orbits[0].m_Radius > 1)
         {
-            playerCam.m_Orbits[0].m_Radius--;
-            playerCam.m_Orbits[1].m_Radius--;
-            playerCam.m_Orbits[2].m_Radius--;
+            playerCam.m_Orbits[0].m_Radius -= zoomSpeed;
+            playerCam.m_Orbits[1].m_Radius -= zoomSpeed;
+            playerCam.m_Orbits[2].m_Radius -= zoomSpeed;
         }
     }
 }
