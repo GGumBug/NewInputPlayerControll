@@ -10,7 +10,7 @@ public class InputProviderWhenDrag : MonoBehaviour, AxisState.IInputAxisProvider
 
     private void Start()
     {
-        XYAxis = InputManager.Instance.XYAxis;
+        XYAxis = InputManager.Instance.CameraXYAxis;
     }
 
     public float GetAxisValue(int axis)
@@ -20,6 +20,7 @@ public class InputProviderWhenDrag : MonoBehaviour, AxisState.IInputAxisProvider
 
         switch (axis)
         {
+            //InputAction Vector2 Delta ¼³Á¤ Position ¾Æ´Ô
             case 0: return XYAxis.action.ReadValue<Vector2>().x;
             case 1: return XYAxis.action.ReadValue<Vector2>().y;
             default: return 0;

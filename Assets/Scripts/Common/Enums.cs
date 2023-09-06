@@ -10,7 +10,7 @@ public enum AddressableType
 public enum InputType
 {
     Move,
-    Drag
+    Zoom
 }
 
 public enum Layer

@@ -15,10 +15,10 @@ public class PlayerMove : IObserver
     }
 }
 
-public class CameraAxis : IObserver
+public class CameraZoom : IObserver
 {
     public void Update()
     {
-        
+        CameraManager.Instance.ZoomInAndOut(InputManager.Instance.CameraZoomValue);
     }
 }

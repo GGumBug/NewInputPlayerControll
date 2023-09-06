@@ -14,6 +14,7 @@ public class CameraManager : Singleton<CameraManager>
         playerCam = go.AddComponent<CinemachineFreeLook>();
         var inputProvider = playerCam.AddComponent<InputProviderWhenDrag>();
         playerCam.UpdateInputAxisProvider();
+        InputManager.Instance.Add(InputType.Zoom, new CameraZoom());
 
         SetPlayerCam();
     }
@@ -27,9 +28,27 @@ public class CameraManager : Singleton<CameraManager>
         playerCam.m_Orbits[0].m_Radius = 3;
         playerCam.m_Orbits[1].m_Radius = 5;
         playerCam.m_Orbits[2].m_Radius = 3;
+
+        playerCam.m_YAxis.m_InvertInput = true;
+
         playerCam.Follow = target;
         playerCam.LookAt = target;
+    }
 
-
+    public void ZoomInAndOut(Vector2 value)
+    {
+        float yAxis = value.y;
+        if (yAxis > 0)
+        {
+            playerCam.m_Orbits[0].m_Radius++;
+            playerCam.m_Orbits[1].m_Radius++;
+            playerCam.m_Orbits[2].m_Radius++;
+        }
+        else if (yAxis < 0)
+        {
+            playerCam.m_Orbits[0].m_Radius--;
+            playerCam.m_Orbits[1].m_Radius--;
+            playerCam.m_Orbits[2].m_Radius--;
+        }
     }
 }
