@@ -114,6 +114,42 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Touch0Pos"",
+                    ""type"": ""Value"",
+                    ""id"": ""b748b080-7d15-4036-aeaf-dff41abefb78"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Touch1Pos"",
+                    ""type"": ""Value"",
+                    ""id"": ""dbaa2821-112c-4f8c-8358-1c2408438f97"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Touch0Press"",
+                    ""type"": ""Button"",
+                    ""id"": ""92b3fdc2-1cf0-4a5a-8965-d654e473aaf3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Touch1Press"",
+                    ""type"": ""Button"",
+                    ""id"": ""4e241cda-4494-41f3-b526-d322880c694d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,12 +188,45 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d7ce0c94-1b27-4694-8325-d238b138a108"",
-                    ""path"": ""<Touchscreen>/touch1/delta"",
+                    ""id"": ""41b2dcbe-2df2-4604-b058-637bd6cc886d"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Zoom"",
+                    ""action"": ""Touch0Pos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a3d732d-b8a2-4e94-a264-f080599c8880"",
+                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch1Pos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e010755-c669-43cb-82fc-6f7a4381c46e"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch0Press"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""01695de1-5b2e-41c5-80aa-a77a1bc9413a"",
+                    ""path"": ""<Touchscreen>/touch1/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch1Press"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -174,6 +243,10 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_CameraRotation = m_Camera.FindAction("CameraRotation", throwIfNotFound: true);
         m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
+        m_Camera_Touch0Pos = m_Camera.FindAction("Touch0Pos", throwIfNotFound: true);
+        m_Camera_Touch1Pos = m_Camera.FindAction("Touch1Pos", throwIfNotFound: true);
+        m_Camera_Touch0Press = m_Camera.FindAction("Touch0Press", throwIfNotFound: true);
+        m_Camera_Touch1Press = m_Camera.FindAction("Touch1Press", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -291,12 +364,20 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
     private List<ICameraActions> m_CameraActionsCallbackInterfaces = new List<ICameraActions>();
     private readonly InputAction m_Camera_CameraRotation;
     private readonly InputAction m_Camera_Zoom;
+    private readonly InputAction m_Camera_Touch0Pos;
+    private readonly InputAction m_Camera_Touch1Pos;
+    private readonly InputAction m_Camera_Touch0Press;
+    private readonly InputAction m_Camera_Touch1Press;
     public struct CameraActions
     {
         private @YDInput m_Wrapper;
         public CameraActions(@YDInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @CameraRotation => m_Wrapper.m_Camera_CameraRotation;
         public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
+        public InputAction @Touch0Pos => m_Wrapper.m_Camera_Touch0Pos;
+        public InputAction @Touch1Pos => m_Wrapper.m_Camera_Touch1Pos;
+        public InputAction @Touch0Press => m_Wrapper.m_Camera_Touch0Press;
+        public InputAction @Touch1Press => m_Wrapper.m_Camera_Touch1Press;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -312,6 +393,18 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
             @Zoom.started += instance.OnZoom;
             @Zoom.performed += instance.OnZoom;
             @Zoom.canceled += instance.OnZoom;
+            @Touch0Pos.started += instance.OnTouch0Pos;
+            @Touch0Pos.performed += instance.OnTouch0Pos;
+            @Touch0Pos.canceled += instance.OnTouch0Pos;
+            @Touch1Pos.started += instance.OnTouch1Pos;
+            @Touch1Pos.performed += instance.OnTouch1Pos;
+            @Touch1Pos.canceled += instance.OnTouch1Pos;
+            @Touch0Press.started += instance.OnTouch0Press;
+            @Touch0Press.performed += instance.OnTouch0Press;
+            @Touch0Press.canceled += instance.OnTouch0Press;
+            @Touch1Press.started += instance.OnTouch1Press;
+            @Touch1Press.performed += instance.OnTouch1Press;
+            @Touch1Press.canceled += instance.OnTouch1Press;
         }
 
         private void UnregisterCallbacks(ICameraActions instance)
@@ -322,6 +415,18 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
             @Zoom.started -= instance.OnZoom;
             @Zoom.performed -= instance.OnZoom;
             @Zoom.canceled -= instance.OnZoom;
+            @Touch0Pos.started -= instance.OnTouch0Pos;
+            @Touch0Pos.performed -= instance.OnTouch0Pos;
+            @Touch0Pos.canceled -= instance.OnTouch0Pos;
+            @Touch1Pos.started -= instance.OnTouch1Pos;
+            @Touch1Pos.performed -= instance.OnTouch1Pos;
+            @Touch1Pos.canceled -= instance.OnTouch1Pos;
+            @Touch0Press.started -= instance.OnTouch0Press;
+            @Touch0Press.performed -= instance.OnTouch0Press;
+            @Touch0Press.canceled -= instance.OnTouch0Press;
+            @Touch1Press.started -= instance.OnTouch1Press;
+            @Touch1Press.performed -= instance.OnTouch1Press;
+            @Touch1Press.canceled -= instance.OnTouch1Press;
         }
 
         public void RemoveCallbacks(ICameraActions instance)
@@ -348,5 +453,9 @@ public partial class @YDInput: IInputActionCollection2, IDisposable
     {
         void OnCameraRotation(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
+        void OnTouch0Pos(InputAction.CallbackContext context);
+        void OnTouch1Pos(InputAction.CallbackContext context);
+        void OnTouch0Press(InputAction.CallbackContext context);
+        void OnTouch1Press(InputAction.CallbackContext context);
     }
 }

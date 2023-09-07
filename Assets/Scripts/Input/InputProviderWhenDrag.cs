@@ -6,23 +6,31 @@ using UnityEngine.InputSystem;
 
 public class InputProviderWhenDrag : MonoBehaviour, AxisState.IInputAxisProvider
 {
-    InputActionReference XYAxis;
+    InputManager _inputM;
+    InputAction _camerarotation;
 
-    private void Start()
+    private void OnEnable()
     {
-        XYAxis = InputManager.Instance.CameraXYAxis;
+        _inputM = InputManager.Instance;
+        _camerarotation = _inputM.YDInput.Camera.CameraRotation;
+        _camerarotation.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _camerarotation.Disable();
     }
 
     public float GetAxisValue(int axis)
     {
-        if (!InputManager.Instance.IsDrage)
+        if (!_inputM.CheckState(_inputM.CameraDragState))
             return 0;
 
         switch (axis)
         {
             //InputAction Vector2 Delta ¼³Á¤ Position ¾Æ´Ô
-            case 0: return XYAxis.action.ReadValue<Vector2>().x;
-            case 1: return XYAxis.action.ReadValue<Vector2>().y;
+            case 0: return _camerarotation.ReadValue<Vector2>().x;
+            case 1: return _camerarotation.ReadValue<Vector2>().y;
             default: return 0;
         }
     }

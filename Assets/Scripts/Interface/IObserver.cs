@@ -14,11 +14,3 @@ public class PlayerMove : IObserver
         PlayerManager.Instance.PlayerCont.ShotMoveRay();
     }
 }
-
-public class CameraZoom : IObserver
-{
-    public void Update()
-    {
-        CameraManager.Instance.ZoomInAndOut(InputManager.Instance.CameraZoomValue);
-    }
-}

@@ -92,6 +92,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Touch0Pos",
+                    "type": "Value",
+                    "id": "b748b080-7d15-4036-aeaf-dff41abefb78",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Touch1Pos",
+                    "type": "Value",
+                    "id": "dbaa2821-112c-4f8c-8358-1c2408438f97",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Touch0Press",
+                    "type": "Button",
+                    "id": "92b3fdc2-1cf0-4a5a-8965-d654e473aaf3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Touch1Press",
+                    "type": "Button",
+                    "id": "4e241cda-4494-41f3-b526-d322880c694d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -130,12 +166,45 @@
                 },
                 {
                     "name": "",
-                    "id": "d7ce0c94-1b27-4694-8325-d238b138a108",
-                    "path": "<Touchscreen>/touch1/delta",
+                    "id": "41b2dcbe-2df2-4604-b058-637bd6cc886d",
+                    "path": "<Touchscreen>/touch0/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Zoom",
+                    "action": "Touch0Pos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8a3d732d-b8a2-4e94-a264-f080599c8880",
+                    "path": "<Touchscreen>/touch1/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Touch1Pos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e010755-c669-43cb-82fc-6f7a4381c46e",
+                    "path": "<Touchscreen>/touch0/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Touch0Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "01695de1-5b2e-41c5-80aa-a77a1bc9413a",
+                    "path": "<Touchscreen>/touch1/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Touch1Press",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

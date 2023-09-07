@@ -154,7 +154,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.Lab302.PlayerTest
+    Android: com.lab302.PlayerBundle
   buildNumber:
     Standalone: 0
     VisionOS: 0

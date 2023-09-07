@@ -1,23 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputManager : Singleton<InputManager>
 {
     #region InputAction
-    private YDInput _ydInput;
+    public YDInput YDInput { get; private set; }
+
     private InputAction _moveDestPos;
     private InputAction _press;
-    private InputAction _zoom;
-
-    public InputActionReference CameraXYAxis { get; set; }
-    public InputActionReference CameraZoom { get; set; }
     #endregion
 
     #region PublisherMethod
     IObserver playerMove;
-    IObserver zoom;
+    public IInputState CurrentState { get; set; }
+    public IInputState WaitState { get; set; }
+    public IInputState ClickState { get; set; }
+    public IInputState CameraDragState { get; set; }
+    public IInputState CameraZoomState { get; set; }
 
     public void Add(InputType type, IObserver observer)
     {
@@ -25,9 +27,6 @@ public class InputManager : Singleton<InputManager>
         {
             case InputType.Move:
                 playerMove = observer;
-                break;
-            case InputType.Zoom:
-                zoom = observer;
                 break;
         }
     }
@@ -39,48 +38,58 @@ public class InputManager : Singleton<InputManager>
             case InputType.Move:
                 playerMove = null;
                 break;
-            case InputType.Zoom:
-                zoom = observer;
-                break;
         }
+    }
+
+    public void SetState(IInputState inputState)
+    {
+        CurrentState = inputState;
+    }
+
+    public bool CheckState(IInputState inputState)
+    {
+        if (CurrentState == inputState)
+            return true;
+        else
+            return false;
     }
     #endregion
 
     Vector3 startPos;
-    float minDragDist = 5f;
+    float minDragDist = 50f;
     Coroutine dragCoroutine;
 
     public Vector3 CurScreenPos { get; private set; }
-    public Vector2 CameraZoomValue { get; private set; }
     public bool IsDrage { get; private set; }
 
 
     private void OnEnable()
     {
-        _ydInput = new YDInput();
-        _moveDestPos = _ydInput.Player.MoveDestPos;
-        _press = _ydInput.Player.Move;
-        _zoom = _ydInput.Camera.Zoom;
-        CameraXYAxis = InputActionReference.Create(_ydInput.Camera.CameraRotation);
-        CameraZoom = InputActionReference.Create(_ydInput.Camera.Zoom);
+        WaitState = new WaitInput(this);
+        ClickState = new ClickInput(this);
+        CameraDragState = new CameraDrag(this);
+        CameraZoomState = new CameraZoom(this);
+        CurrentState = WaitState;
+
+
+        YDInput = new YDInput();
+        _moveDestPos = YDInput.Player.MoveDestPos;
+        _press = YDInput.Player.Move;
 
         _moveDestPos.Enable();
         _press.Enable();
-        _zoom.Enable();
 
         _moveDestPos.started += (context) => ScreenPosStarted(context);
         _moveDestPos.performed += (context) => ScreenPosPerformed(context);
         _press.started += (context) => PressStarted(context);
         _press.performed += (context) => PressPerformed(context);
         _press.canceled += (context) => PressCanceled(context);
-        _zoom.performed += (context) => ZoomPerformed(context);
     }
 
     private void OnDisable()
     {
         _moveDestPos.Disable();
         _press.Disable();
-        _zoom.Disable();
     }
 
     void ScreenPosStarted(InputAction.CallbackContext context)
@@ -96,6 +105,7 @@ public class InputManager : Singleton<InputManager>
     void PressStarted(InputAction.CallbackContext context)
     {
         startPos = CurScreenPos;
+        CurrentState.CanClick();
     }
 
     void PressPerformed(InputAction.CallbackContext context)
@@ -105,9 +115,9 @@ public class InputManager : Singleton<InputManager>
 
     void PressCanceled(InputAction.CallbackContext context)
     {
-        if (IsDrage)
+        if (!CurrentState.CanClick())
         {
-            IsDrage = false;
+            CurrentState = WaitState;
             return;
         }
 
@@ -115,21 +125,13 @@ public class InputManager : Singleton<InputManager>
         playerMove.Update();
     }
 
-    void ZoomPerformed(InputAction.CallbackContext context)
-    {
-        CameraZoomValue = _zoom.ReadValue<Vector2>();
-        zoom.Update();
-    }
-
     IEnumerator CheckDrag()
     {
         while (true) 
         {
-            Debug.Log($"startPos : {startPos}");
-            Debug.Log($"CurScreenPos : {CurScreenPos}");
-            if (Vector2.Distance(startPos, CurScreenPos) > 0.1f)
+            if (Vector2.Distance(startPos, CurScreenPos) > minDragDist)
             {
-                IsDrage = true;
+                CurrentState = CameraDragState;
                 yield break;
             }
 
